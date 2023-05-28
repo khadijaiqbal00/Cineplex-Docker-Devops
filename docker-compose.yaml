@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+
+  php:
+    build:
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
+    ports:
+      - '8000:80'
+    depends_on:
+      - mysql
+
+  mysql:
+    build:
+      context: .
+      dockerfile: dockerfiles/mysql.dockerfile
+    volumes:
+       -  mysql:/var/lib/mysql
+       - ./dockerfiles/dump.sql:/docker-entrypoint-initdb.d/start.sql
+      
+volumes:
+  mysql:
+
+
